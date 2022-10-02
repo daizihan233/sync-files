@@ -27,9 +27,9 @@ checkOrAddSyncIgnore() {
 createCommitMessage() {
     echo "Sync files with ${SYNC_REPOSITORY}" > /tmp/commit-message
     echo "" >> /tmp/commit-message
-    echo "This PR syncs files with ${GITHUB_SERVER_URL}/${SYNC_REPOSITORY}" >> /tmp/commit-message
+    echo "This PR syncs files with ${SYNC_REPOSITORY}" >> /tmp/commit-message
     echo "" >> /tmp/commit-message
-    echo "Revision: ${GITHUB_SERVER_URL}/${SYNC_REPOSITORY}/commits/$(git rev-parse HEAD)" >> /tmp/commit-message 
+    echo "Revision: ${SYNC_REPOSITORY}/commits/$(git rev-parse HEAD)" >> /tmp/commit-message 
     echo "" >> /tmp/commit-message
     git log -1 >> /tmp/commit-message
 }
@@ -39,7 +39,7 @@ main() {
     git config --global user.email ${AUTHOR_EMAIL}
     git config --global user.name ${AUTHOR_NAME}
     currentBranch=$(git branch --show-current)
-    git remote add source ${GITHUB_SERVER_URL}/${SYNC_REPOSITORY}.git
+    git remote add source ${SYNC_REPOSITORY}.git
     git fetch source
     git checkout source/${SYNC_BRANCH_NAME}
     deletedFiles=$(getDeletedFiles)
